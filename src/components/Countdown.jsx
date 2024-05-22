@@ -15,6 +15,7 @@ export default function Countdown({ targetDate }) {
       };
     }
 
+    console.log("Time left: ", timeLeft);
     return timeLeft;
   };
 
@@ -32,7 +33,7 @@ export default function Countdown({ targetDate }) {
 
   return (
     <div>
-      <h2>Countdown to {targetDate}</h2>
+      <h2>Countdown too {targetDate}</h2>
       <div>
         {Object.keys(timeLeft()).map((interval) => (
           <span key={interval}>
