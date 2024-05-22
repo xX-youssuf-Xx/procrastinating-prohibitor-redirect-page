@@ -48,7 +48,7 @@ export default function Countdown() {
   });
 
   return (
-    <div id="countdown">
+    <div id="countdown" style={{ textAlign: "center", fontSize: "xxx-large", color: "red" }} >
       {timeLeft().days !== "EXPIRED" ? (
         <>
           {timeLeft().days} days {timeLeft().hours} hrs {timeLeft().minutes} mins {timeLeft().seconds} secs
