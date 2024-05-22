@@ -1,46 +1,61 @@
-// ~/components/Countdown.jsx
 import { createSignal, createEffect, onCleanup } from "solid-js";
 
-export default function Countdown({ targetDate }) {
-  const calculateTimeLeft = () => {
-    const difference = +new Date(targetDate) - +new Date();
-    let timeLeft = {};
+export default function Countdown() {
+  const end = new Date("06/22/2024 10:01 AM");
 
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
+  const _second = 1000;
+  const _minute = _second * 60;
+  const _hour = _minute * 60;
+  const _day = _hour * 24;
+
+  const calculateTimeLeft = () => {
+    const now = new Date();
+    const distance = end - now;
+
+    if (distance < 0) {
+      clearInterval(timer);
+      return {
+        days: "EXPIRED",
+        hours: "",
+        minutes: "",
+        seconds: ""
       };
     }
 
-    console.log("Time left: ", timeLeft);
-    return timeLeft;
+    const days = Math.floor(distance / _day);
+    const hours = Math.floor((distance % _day) / _hour);
+    const minutes = Math.floor((distance % _hour) / _minute);
+    const seconds = Math.floor((distance % _minute) / _second);
+
+    return {
+      days: days,
+      hours: hours,
+      minutes: minutes,
+      seconds: seconds
+    };
   };
 
   const [timeLeft, setTimeLeft] = createSignal(calculateTimeLeft());
 
   createEffect(() => {
-    const intervalId = setInterval(() => {
+    const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
     onCleanup(() => {
-      clearInterval(intervalId);
+      clearInterval(timer);
     });
   });
 
   return (
-    <div>
-      <h2>Countdown too {targetDate}</h2>
-      <div>
-        {Object.keys(timeLeft()).map((interval) => (
-          <span key={interval}>
-            {timeLeft()[interval]} {interval}{" "}
-          </span>
-        ))}
-      </div>
+    <div id="countdown">
+      {timeLeft().days !== "EXPIRED" ? (
+        <>
+          {timeLeft().days} days {timeLeft().hours} hrs {timeLeft().minutes} mins {timeLeft().seconds} secs
+        </>
+      ) : (
+        "EXPIRED!"
+      )}
     </div>
   );
 }
