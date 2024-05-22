@@ -1,7 +1,7 @@
 import { createSignal, createEffect, onCleanup } from "solid-js";
 
 export default function Countdown() {
-  const end = new Date("06/22/2024 10:01 AM");
+  const end = new Date("06/22/2024 9:00 AM");
 
   const _second = 1000;
   const _minute = _second * 60;
