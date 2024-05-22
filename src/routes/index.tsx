@@ -10,7 +10,8 @@ export default function Home() {
     <main>
       <Title>STOP!</Title>
       <h1>Stop procrastinating!</h1>
-      <Counter />
+      <p>time until first exam :</p>
+      <br></br>
       <Countdown />
       <p>Go work!!</p>
     </main>
