@@ -11,7 +11,7 @@ export default function Home() {
       <Title>STOP!</Title>
       <h1>Stop procrastinating!</h1>
       <Counter />
-      <Countdown targetDate={targetDate} />
+      <Countdown />
       <p>Go work!!</p>
     </main>
   );
