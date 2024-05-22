@@ -1,4 +1,5 @@
 import { createSignal, createEffect, onCleanup } from "solid-js";
+import "./Countdown.css";
 
 export default function Countdown() {
   const end = new Date("06/22/2024 9:00 AM");
