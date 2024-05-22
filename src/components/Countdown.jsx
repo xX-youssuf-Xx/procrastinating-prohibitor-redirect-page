@@ -1,6 +1,5 @@
-
 // ~/components/Countdown.jsx
-import { createSignal, onCleanup } from "solid-js";
+import { createSignal, createEffect, onCleanup } from "solid-js";
 
 export default function Countdown({ targetDate }) {
   const calculateTimeLeft = () => {
@@ -21,14 +20,14 @@ export default function Countdown({ targetDate }) {
 
   const [timeLeft, setTimeLeft] = createSignal(calculateTimeLeft());
 
-  const updateCountdown = () => {
-    setTimeLeft(calculateTimeLeft());
-  };
+  createEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
 
-  const intervalId = setInterval(updateCountdown, 1000);
-
-  onCleanup(() => {
-    clearInterval(intervalId);
+    onCleanup(() => {
+      clearInterval(intervalId);
+    });
   });
 
   return (
@@ -36,7 +35,7 @@ export default function Countdown({ targetDate }) {
       <h2>Countdown to {targetDate}</h2>
       <div>
         {Object.keys(timeLeft()).map((interval) => (
-          <span>
+          <span key={interval}>
             {timeLeft()[interval]} {interval}{" "}
           </span>
         ))}
